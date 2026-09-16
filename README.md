@@ -32,7 +32,7 @@ I built this project to tie both Chemical Engineering and Data Science together.
 
 ## Screenshots
 
-### Baseline (Healthy Operation)
+### Baseline Operation
 ![Baseline dashboard view showing normal operating conditions](assets/Baseline.png)
 
 ### Flow Blockage
