@@ -17,3 +17,15 @@ A residual-based fault detection pipeline compares the live sensor readings agai
 All of this was made into an interactive dashboard using Streamlit, which allows for a live comparison of predicted vs measured performance and presents fault alerts in real time.
 
 I built this project to tie both Chemical Engineering and Data Science together. I combined process modeling with the kind of data pipelines, fault detection, and visualization tools used in industrial process monitoring. This is a working example of the exact skill combination I'm aiming to bring to co-op and industry roles.
+
+## Features
+
+- **Physics-Based Digital Twin** - An effectiveness-NTU model of a 1 shell pass, 2 tube pass shell-and-tube heat exchanger, hand-derived and checked against energy balance and thermodynamic constraints.
+
+- **Synthetic Sensor Data Generation** - Simulated 4 hours of 1 minute sensor readings representing healthy operation, and realistic sensor noise was layered on top of the model's predictions.
+
+- **Fault Injection** - Four fault scenarios were created: fouling, sensor drift, flow blockage, and leakage. Each of the faults were validated against expected physical behavior.
+
+- **Residual-Based Fault Detection** - Residuals were standardized and fed into an Isolation Forest that was trained exclusively on baseline data, automatically flagging anomalous operation conditions.
+
+- **Interactive Streamlit Dashboard** - Live comparison of measured vs. predicted performance for the selected scenario, with real-time fault alerts and an anomaly percentage metric.
