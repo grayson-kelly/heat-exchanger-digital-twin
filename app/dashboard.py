@@ -11,6 +11,8 @@ from heatexchanger_model import effectiveness_ntu  #my validated physics model
 from sklearn.preprocessing import StandardScaler  #scaling residuals
 from sklearn.ensemble import IsolationForest  #anomaly detection
 import plotly.express as px  #more customizable plotting library
+import time  #animation frame pause
+
 
 #Trains the model once and caches it (aka storing the already trained model), so it doesn't retrain every time the dashboard reruns
 @st.cache_resource  #tells streamlit to remember this function's result instead of recomputing it every time
@@ -69,7 +71,7 @@ else:
     col1, col2 = st.columns(2)  #splits the page into two equal side-by-side sections
 
     with col1:
-        st.write("**Hot Outlet (Th_o)**")  #header
+        st.write("**Hot Outlet (Th_o)**")  #small header above the chart
         th_chart_data = display_dataframe[["Th_o_true", "Th_o_measured"]]  #select Th_o columns
         fig_th = px.line(th_chart_data, labels={"value": "Temperature (°C)", "index": "Time step"}, color_discrete_map={"Th_o_true": "#4A90D9", "Th_o_measured": "#E8543A"})
         fig_th.update_layout(legend_title_text="")
