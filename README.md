@@ -43,3 +43,19 @@ I built this project to tie both Chemical Engineering and Data Science together.
 
 ### Leak
 ![Leak detection via a growing energy balance mismatch](assets/Leak.png)
+
+## Tech Stack
+
+- **Python** - core language used
+
+- **NumPy & pandas** - for data generation, manipulation, and analysis
+
+- **scikit-learn** - StandardScalar and IsolationForest
+
+- **Streamlit** - interactive dashboard
+
+- **Plotly** - dashboard data plots/visualization
+
+- **Matplotlib** - validation plots to check physical model
+
+- **Jupyter Notebook** - model development, data generation, analysis
