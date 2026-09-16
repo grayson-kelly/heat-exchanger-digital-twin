@@ -29,3 +29,17 @@ I built this project to tie both Chemical Engineering and Data Science together.
 - **Residual-Based Fault Detection** - Residuals were standardized and fed into an Isolation Forest that was trained exclusively on baseline data, automatically flagging anomalous operation conditions.
 
 - **Interactive Streamlit Dashboard** - Live comparison of measured vs. predicted performance for the selected scenario, with real-time fault alerts and an anomaly percentage metric.
+
+## Screenshots
+
+### Baseline (Healthy Operation)
+![Baseline dashboard view showing normal operating conditions](assets/Baseline.png)
+
+### Flow Blockage
+![Flow blockage showing a sharp, simultaneous drop in both outlet temperatures](assets/FlowBlockage.png)
+
+### Sensor Drift
+![Sensor drift showing Th_o diverging from true values while Tc_o remains normal](assets/SensorDrift.png)
+
+### Leak
+![Leak detection via a growing energy balance mismatch](assets/Leak.png)
