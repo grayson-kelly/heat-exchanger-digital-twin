@@ -59,3 +59,22 @@ I built this project to tie both Chemical Engineering and Data Science together.
 - **Matplotlib** - validation plots to check physical model
 
 - **Jupyter Notebook** - model development, data generation, analysis
+
+## Project Structure
+
+```
+heat-exchanger-digital-twin/
+├── app/
+│   └── dashboard.py           # Streamlit dashboard
+├── data/                       # Generated CSVs (baseline + 4 fault scenarios)
+├── notebooks/
+│   ├── 01_model_validation.ipynb
+│   ├── 02_data_generation.ipynb
+│   ├── 03_fault_injection.ipynb
+│   └── 04_fault_detection.ipynb
+├── src/
+│   └── heatexchanger_model.py  # Validated effectiveness-NTU physics model
+├── assets/                     # README screenshots
+├── requirements.txt
+└── README.md
+```
