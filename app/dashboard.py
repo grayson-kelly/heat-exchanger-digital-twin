@@ -43,7 +43,8 @@ st.write("This dashboard visualizes a physics-based digital twin of a shell and 
 scaler, isolation_forest, baseline_dataframe = train_model()  #calls the training function, caches the results
 
 #Dropdown Menu 
-scenario = st.selectbox("Select an operating scenario:", ["Baseline", "Fouling", "Sensor Drift", "Flow Blockage", "Leak"])
+with st.sidebar:
+    scenario = st.selectbox("Select an operating scenario:", ["Baseline", "Fouling", "Sensor Drift", "Flow Blockage", "Leak"])
 
 #Loading the correct dataset
 if scenario == "Baseline":
@@ -73,10 +74,12 @@ if scenario != "Leak": #If tthis is not the leak scenario
     scores = isolation_forest.predict(scaled_residuals)  #classify each row: 1 = normal, -1 = anomaly
     percent_flagged = (scores == -1).sum() / len(scores) * 100  #calculate percentage flagged
     if percent_flagged > 10:  #if more than 10% of readings look anomalous
-        st.error(f"⚠️ Fault Alert: {percent_flagged:.1f}% of readings flagged as anomalous")  #red alert box
+        st.error(f"⚠️ Fault Alert")  #red alert box
     else:
-        st.success(f"✅ Operating normally: {percent_flagged:.1f}% of readings flagged")  #green success box
-
+        st.success(f"✅ Operating normally")  #green success box
+    delta_color_choice = "inverse" if percent_flagged > 10 else "normal"  #if over 10% of data is faulty turn it red, if under green
+    st.metric(label="Percent Flagged as Anomalous", value=f"{percent_flagged:.1f}%", delta=f"{percent_flagged - 5:.1f}% vs. healthy baseline", delta_color=delta_color_choice)
+        
 #Leak portion ---> Train model and almost exactly taken from 04_fault_detection
 @st.cache_resource  #trains once, cached across reruns
 def train_leak_model():
@@ -129,6 +132,9 @@ if scenario == "Leak":
     leak_percent_flagged = (leak_scores == -1).sum() / len(leak_scores) * 100  #calculate percentage flagged
 
     if leak_percent_flagged > 10:
-        st.error(f"⚠️ Fault Alert: {leak_percent_flagged:.1f}% of readings flagged as anomalous")
+        st.error(f"⚠️ Fault Alert")
     else:
-        st.success(f"✅ Operating normally: {leak_percent_flagged:.1f}% of readings flagged")
+        st.success(f"✅ Operating normally")
+    delta_color_choice = "inverse" if leak_percent_flagged > 10 else "normal"  #if over 10% of data is leak turn it red, if under green
+    st.metric(label="Percent Flagged as Anomalous", value=f"{leak_percent_flagged:.1f}%", delta=f"{leak_percent_flagged - 5:.1f}% vs. healthy baseline", delta_color=delta_color_choice)
+        
