@@ -58,12 +58,29 @@ elif scenario == "Flow Blockage":
 elif scenario == "Leak":
     display_dataframe = pd.read_csv(os.path.join(DATA_DIR, "leak_fault_data.csv"))
 
-#Plot measured vs true Th_o over time for the current scenario
-chart_data = display_dataframe[["Th_o_true", "Th_o_measured"]]  #select the two columns to compare
-#line chart creation
-fig = px.line(chart_data, labels={"value": "Temperature (°C)", "index": "Time step"}, color_discrete_map={"Th_o_true": "#4A90D9", "Th_o_measured": "#E8543A"}) 
-fig.update_layout(legend_title_text="")  #removes the legend title
-st.plotly_chart(fig)  #displays the plotly chart in streamlit
+#Plot the fault signal appropriate to the leak
+if scenario == "Leak":
+    st.write("**Energy Balance Mismatch**")  #leak's real fault signal
+    mismatch_chart_data = display_dataframe[["energy_mismatch"]]
+    fig_mismatch = px.line(mismatch_chart_data, labels={"value": "Energy Mismatch (W)", "index": "Time step"}, color_discrete_map={"energy_mismatch": "#E8543A"})
+    fig_mismatch.update_layout(legend_title_text="")
+    st.plotly_chart(fig_mismatch)
+else:
+    col1, col2 = st.columns(2)  #splits the page into two equal side-by-side sections
+
+    with col1:
+        st.write("**Hot Outlet (Th_o)**")  #header
+        th_chart_data = display_dataframe[["Th_o_true", "Th_o_measured"]]  #select Th_o columns
+        fig_th = px.line(th_chart_data, labels={"value": "Temperature (°C)", "index": "Time step"}, color_discrete_map={"Th_o_true": "#4A90D9", "Th_o_measured": "#E8543A"})
+        fig_th.update_layout(legend_title_text="")
+        st.plotly_chart(fig_th)
+
+    with col2:
+        st.write("**Cold Outlet (Tc_o)**")  #header
+        tc_chart_data = display_dataframe[["Tc_o_true", "Tc_o_measured"]]  #select Tc_o columns
+        fig_tc = px.line(tc_chart_data, labels={"value": "Temperature (°C)", "index": "Time step"}, color_discrete_map={"Tc_o_true": "#4A90D9", "Tc_o_measured": "#E8543A"})
+        fig_tc.update_layout(legend_title_text="")
+        st.plotly_chart(fig_tc)
 
 #Compute residuals for the selected scenario (NOT LEAK) ---> Basically taken right from 04_fault_detection
 if scenario != "Leak": #If tthis is not the leak scenario
