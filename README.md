@@ -104,3 +104,11 @@ pip install -r requirements.txt
 streamlit run app/dashboard.py
 
 The notebooks (`01_model_validation.ipynb` through `04_fault_detection.ipynb`) can be run in order via Jupyter to regenerate the datasets and reproduce the full analysis
+
+## Methodology
+
+**Physics Model** - The heat exchange was modeled using the effectiveness-NTU method for a 1 shell pass, 2 tube pass configuration. Effectiveness (ε) is calculated from NTU and the capacity ratio (Cr), then used to determing actual heat transfer (Q) and the outlet temperatures, following ε = Q / Q_max.
+
+**Fault Detection** - For each variable we're interested in, a residual is calculated as the healthy baseline's expected value minus the measures value from the evaluated scenario. Residuals are then standardized (mean 0, standard deviation 1) using StandardScalar fit only on healthy data, then they we're passed to an Isolation Forest which was trained only on healthy residuals, the model is never exposed to fault data during training, only during scoring.
+
+**Leak Detection** - The leak does not directly affect outlet temperatures, it is detected separately using an energy balance mismatch. The energy mismatch is the difference between heat transfer calculated from inlet flow versus outlet flow. A genuine leak causes these two calculations to diverge, while healthy operation shows only variation from sensor noise.
