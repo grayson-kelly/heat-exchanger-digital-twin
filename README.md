@@ -128,3 +128,17 @@ The Isolation Forest model, trained exclusively on healthy baseline residuals, s
 Both healthy baselines (the main Th_o/Tc_o model and the separate leak-specific model) were flagged at almost exactly the models' configured 5% contamination rate, confirming the detection thresholds are well-calibrated to normal operation.
 
 Fouling and leak showed gradually increasing anomaly rates as the fault developed, drift showed a clean healthy period followed by an abrupt, sustained shift, and blockage showed a sharp, immediate transition at the moment of the flow disruption.
+
+**A data quality issue I caught and fixed:** my early testing revealed that generating each fault scenario with independently-randomized operating conditions introduced misleading noise into the residuals, since differences between datasets partly reflected random input variation rather than the fault itself. This was identified and corrected by having all fault scenarios reuse baseline's exact input conditions, isolating the residual signal to the fault alone, significantly improving detection accuracy, especially for distinguishing pre-fault "before" periods from genuinely faulty ones.
+
+## Future Improvements
+
+- **Fault classification** - allow the program to classify which fault type is occurring, using labeled training data and a supervised classifier.
+- **Real plant data** - validate the detection pipeline against real industrial data rather than my synthetic simulations to test performance under less ideal conditions.
+- **Randomized scenario generation in the dashboard** - regenerate a fresh instance of a fault scenario on demand, rather than displaying a fixed, pre-generated dataset. Potentially a button for it.
+- **Expand fault scenarios** - add additional fault types like tube rupture, more cold sided faults, or multiple faults happening at once.
+- **Threshold tuning for each fault type** — currently all faults share the same contamination rate, fault-specific thresholds could improve detection sensitivity for faults like fouling.
+
+## License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
