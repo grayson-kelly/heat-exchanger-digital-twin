@@ -112,3 +112,19 @@ The notebooks (`01_model_validation.ipynb` through `04_fault_detection.ipynb`) c
 **Fault Detection** - For each variable we're interested in, a residual is calculated as the healthy baseline's expected value minus the measured value from the evaluated scenario. Residuals are then standardized (mean 0, standard deviation 1) using StandardScalar fit only on healthy data, then they're passed to an Isolation Forest which was trained only on healthy residuals, the model is never exposed to fault data during training, only during scoring.
 
 **Leak Detection** - The leak does not directly affect outlet temperatures, it is detected separately using an energy balance mismatch. The energy mismatch is the difference between heat transfer calculated from inlet flow versus outlet flow. A genuine leak causes these two calculations to diverge, while healthy operation shows only variation from sensor noise.
+
+## Results
+
+The Isolation Forest model, trained exclusively on healthy baseline residuals, successfully distinguished all four fault types from normal operation:
+
+| Scenario | Percent Flagged as Anomalous |
+|---|---|
+| Baseline (Healthy) | 5.00% (expected statistical noise) |
+| Fouling | 69.58% |
+| Sensor Drift | 84.17% |
+| Flow Blockage | 53.33% |
+| Leak | 82.50% |
+
+Both healthy baselines (the main Th_o/Tc_o model and the separate leak-specific model) were flagged at almost exactly the models' configured 5% contamination rate, confirming the detection thresholds are well-calibrated to normal operation.
+
+Fouling and leak showed gradually increasing anomaly rates as the fault developed, drift showed a clean healthy period followed by an abrupt, sustained shift, and blockage showed a sharp, immediate transition at the moment of the flow disruption.
