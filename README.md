@@ -78,3 +78,23 @@ heat-exchanger-digital-twin/
 ├── requirements.txt
 └── README.md
 ```
+
+## Setup & How to Run
+
+All commands below are run in Command Prompt (Windows) or Terminal (Mac/Linux).
+
+**1. Clone the repository**
+git clone https://github.com/grayson-kelly/heat-exchanger-digital-twin.git
+cd heat-exchanger-digital-twin
+
+**2. Create and activate a virtual environment**
+python -m venv venv
+venv\Scripts\activate
+
+**3. Install dependencies**
+pip install -r requirements.txt
+
+**4. Run the dashboard**
+streamlit run app/dashboard.py
+
+The notebooks (`01_model_validation.ipynb` through `04_fault_detection.ipynb`) can be run in order via Jupyter to regenerate the datasets and reproduce the full analysis
